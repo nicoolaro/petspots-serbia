@@ -3,588 +3,166 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSpots Serbia — Find pet-friendly places near you</title>
+<title>PetSpots Serbia — Pet-friendly places near you</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f7f5f0;
-    --white: #ffffff;
-    --surface: #ffffff;
-    --surface2: #f0ede6;
-    --border: #e2ddd5;
-    --accent: #2d6a4f;
-    --accent-light: #d8efe3;
-    --accent2: #e07b39;
-    --text: #1a1a18;
-    --text-muted: #6b6860;
-    --text-dim: #aaa89f;
-    --radius: 12px;
-    --font: 'Sora', sans-serif;
-    --font-serif: 'Lora', Georgia, serif;
-    --shadow: 0 1px 4px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.05);
-    --shadow-hover: 0 4px 12px rgba(0,0,0,0.1), 0 8px 32px rgba(0,0,0,0.08);
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font);
-    font-size: 15px;
-    line-height: 1.6;
-  }
-
-  /* ── HERO HEADER ── */
-  .hero {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    padding: 36px 24px 28px;
-  }
-
-  .hero-inner {
-    max-width: 980px;
-    margin: 0 auto;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
-  .logo-area {}
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .logo-paw {
-    width: 38px;
-    height: 38px;
-    background: var(--accent);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
-  }
-
-  .logo-text {
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: var(--text);
-  }
-
-  .logo-text span { color: var(--accent); }
-
-  .tagline {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-top: 6px;
-    font-weight: 400;
-    margin-left: 48px;
-  }
-
-  .hero-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding-top: 2px;
-  }
-
-  .saved-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    border: 1.5px solid var(--border);
-    background: var(--white);
-    border-radius: 20px;
-    padding: 7px 14px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: var(--font);
-  }
-
-  .saved-pill:hover { border-color: var(--accent); color: var(--accent); }
-  .saved-pill.active { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
-
-  .saved-count {
-    background: var(--accent);
-    color: white;
-    border-radius: 10px;
-    padding: 1px 7px;
-    font-size: 11px;
-    font-weight: 700;
-  }
-
-  /* ── STICKY CONTROLS ── */
-  .controls {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  }
-
-  .controls-inner {
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 14px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .controls-row1 {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  /* City dropdown */
-  .city-select {
-    appearance: none;
-    -webkit-appearance: none;
-    background: var(--surface2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6860' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center;
-    border: 1.5px solid var(--border);
-    color: var(--text);
-    font-family: var(--font);
-    font-size: 14px;
-    font-weight: 600;
-    padding: 9px 36px 9px 14px;
-    border-radius: 10px;
-    cursor: pointer;
-    outline: none;
-    transition: border-color 0.15s;
-    min-width: 140px;
-  }
-
-  .city-select:focus { border-color: var(--accent); }
-
-  /* Search */
-  .search-input {
-    flex: 1;
-    min-width: 180px;
-    background: var(--surface2);
-    border: 1.5px solid var(--border);
-    color: var(--text);
-    font-family: var(--font);
-    font-size: 14px;
-    padding: 9px 14px;
-    border-radius: 10px;
-    outline: none;
-    transition: border-color 0.15s;
-  }
-
-  .search-input::placeholder { color: var(--text-dim); }
-  .search-input:focus { border-color: var(--accent); background: var(--white); }
-
-  /* Category pills */
-  .controls-row2 {
-    display: flex;
-    gap: 7px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-
-  .filter-btn {
-    background: var(--surface2);
-    border: 1.5px solid var(--border);
-    color: var(--text-muted);
-    font-family: var(--font);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 6px 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.15s;
-    white-space: nowrap;
-    letter-spacing: 0.01em;
-  }
-
-  .filter-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
-  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
-
-  /* Pet size sub-filters */
-  .size-filters {
-    display: flex;
-    gap: 6px;
-    margin-left: 6px;
-    padding-left: 12px;
-    border-left: 1.5px solid var(--border);
-  }
-
-  .size-btn {
-    background: var(--white);
-    border: 1.5px solid var(--border);
-    color: var(--text-muted);
-    font-family: var(--font);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 5px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-
-  .size-btn:hover { border-color: var(--accent2); color: var(--accent2); }
-  .size-btn.active { background: var(--accent2); border-color: var(--accent2); color: white; }
-
-  /* ── MAP TOGGLE ── */
-  .map-toggle-bar {
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 16px 24px 0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .map-toggle-btn {
-    background: var(--white);
-    border: 1.5px solid var(--border);
-    color: var(--text-muted);
-    font-family: var(--font);
-    font-size: 13px;
-    font-weight: 600;
-    padding: 7px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.15s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .map-toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .map-toggle-btn.open { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
-
-  .map-panel {
-    max-width: 980px;
-    margin: 12px auto 0;
-    padding: 0 24px;
-    display: none;
-  }
-
-  .map-panel.open { display: block; }
-
-  .map-embed {
-    width: 100%;
-    height: 320px;
-    border-radius: var(--radius);
-    border: 1.5px solid var(--border);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-  }
-
-  .map-embed iframe { width: 100%; height: 100%; border: none; }
-
-  /* ── RESULTS META ── */
-  .results-meta {
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 16px 24px 10px;
-    color: var(--text-muted);
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .results-meta strong { color: var(--accent); font-weight: 700; }
-
-  /* ── GRID ── */
-  main {
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 0 24px 60px;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-    gap: 16px;
-  }
-
-  /* ── CARD ── */
-  .card {
-    background: var(--white);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: box-shadow 0.2s, transform 0.2s, border-color 0.15s;
-    position: relative;
-  }
-
-  .card:hover {
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-2px);
-  }
-
-  .card.saved { border-color: var(--accent); }
-
-  /* Pet rating bar at top of card */
-  .pet-bar {
-    height: 4px;
-    background: var(--surface2);
-  }
-
-  .pet-bar-fill {
-    height: 100%;
-    background: var(--accent);
-    transition: width 0.3s;
-  }
-
-  .card-body {
-    padding: 16px 16px 10px;
-  }
-
-  .card-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 6px;
-  }
-
-  .card-cat {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 4px;
-  }
-
-  .cat-restaurant { background: #fff0e6; color: #c05a20; }
-  .cat-cafe       { background: #e8f5ec; color: #2d6a4f; }
-  .cat-bar        { background: #ede8fa; color: #5a3fa0; }
-  .cat-park       { background: #eaf5e4; color: #3a7a30; }
-  .cat-hotel      { background: #e6f0ff; color: #2050a0; }
-  .cat-vet        { background: #fff0f0; color: #b03030; }
-  .cat-shop       { background: #fef8e0; color: #8a6010; }
-  .cat-beach      { background: #e0f4fa; color: #1a6080; }
-
-  .card-name {
-    font-family: var(--font-serif);
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1.25;
-    color: var(--text);
-    margin-bottom: 5px;
-  }
-
-  .card-desc {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.55;
-    font-weight: 400;
-  }
-
-  .card-footer {
-    padding: 10px 16px 14px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid var(--border);
-    margin-top: 12px;
-    gap: 8px;
-  }
-
-  .card-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-
-  .card-area {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-weight: 600;
-  }
-
-  .card-pets {
-    font-size: 11px;
-    color: var(--text-dim);
-  }
-
-  .card-tags {
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-  }
-
-  .tag {
-    font-size: 11px;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-weight: 600;
-    background: var(--surface2);
-    color: var(--text-muted);
-    border: 1px solid var(--border);
-  }
-
-  .save-btn {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    border: 1.5px solid var(--border);
-    background: var(--white);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    transition: all 0.15s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-  }
-
-  .save-btn:hover { border-color: var(--accent); }
-  .save-btn.saved-active { background: var(--accent); border-color: var(--accent); }
-
-  /* pet level stars */
-  .pet-stars {
-    display: flex;
-    gap: 2px;
-  }
-
-  .pet-star {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--border);
-  }
-
-  .pet-star.on { background: var(--accent); }
-
-  /* ── EMPTY STATE ── */
-  .empty {
-    grid-column: 1/-1;
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--text-muted);
-  }
-
-  .empty-icon { font-size: 40px; margin-bottom: 12px; }
-  .empty p { font-size: 14px; margin-top: 6px; }
-
-  /* ── SUGGEST STRIP ── */
-  .suggest-strip {
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 0 24px 48px;
-  }
-
-  .suggest-box {
-    background: var(--accent-light);
-    border: 1.5px solid #b2d8c5;
-    border-radius: var(--radius);
-    padding: 22px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .suggest-box p { font-size: 14px; color: #2d5a42; }
-  .suggest-box strong { font-weight: 700; }
-
-  .suggest-btn {
-    background: var(--accent);
-    border: none;
-    color: white;
-    font-family: var(--font);
-    font-size: 13px;
-    font-weight: 700;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: opacity 0.15s;
-    white-space: nowrap;
-  }
-
-  .suggest-btn:hover { opacity: 0.88; }
-
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 24px;
-    text-align: center;
-    color: var(--text-dim);
-    font-size: 12px;
-    background: var(--white);
-  }
-
-  /* ── SAVED BANNER ── */
-  .saved-banner {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: var(--accent);
-    color: white;
-    font-size: 13px;
-    font-weight: 700;
-    padding: 10px 22px;
-    border-radius: 20px;
-    transition: transform 0.3s ease;
-    z-index: 999;
-    white-space: nowrap;
-    box-shadow: 0 4px 16px rgba(45,106,79,0.3);
-  }
-
-  .saved-banner.show { transform: translateX(-50%) translateY(0); }
-
-  @media (max-width: 600px) {
-    .hero { padding: 20px 16px; }
-    .controls-inner { padding: 12px 16px; }
-    .controls-row1 { flex-direction: column; align-items: stretch; }
-    .city-select { width: 100%; }
-    .map-toggle-bar, .map-panel, .results-meta, main, .suggest-strip { padding-left: 16px; padding-right: 16px; }
-    .grid { grid-template-columns: 1fr; }
-    .size-filters { margin-left: 0; padding-left: 0; border-left: none; }
-  }
+:root {
+  --bg: #f8f6f3;
+  --white: #ffffff;
+  --border: #e8e4df;
+  --hero-bg: #fdf0e8;
+  --hero-accent: #f4a26b;
+  --primary: #5b8c5a;
+  --primary-light: #eaf4ea;
+  --primary-dark: #3d6b3c;
+  --text: #1f1f1f;
+  --text-muted: #666;
+  --text-dim: #aaa;
+  --radius: 16px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-hover: 0 4px 16px rgba(0,0,0,0.13), 0 8px 24px rgba(0,0,0,0.09);
+  --font: 'Roboto', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+/* HERO */
+.hero { background: var(--hero-bg); border-bottom: 1px solid #f0e0d0; padding: 28px 24px 24px; position: relative; overflow: hidden; }
+.hero::before { content: '🐾'; position: absolute; right: -8px; top: -8px; font-size: 110px; opacity: 0.07; pointer-events: none; }
+.hero-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-icon { width: 40px; height: 40px; background: var(--hero-accent); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 2px 8px rgba(244,162,107,0.35); }
+.logo-name { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+.logo-name span { color: var(--primary-dark); }
+.tagline { font-size: 12px; color: #a07850; margin-top: 2px; }
+.saved-pill { display: inline-flex; align-items: center; gap: 7px; border: 1.5px solid #e8c8a8; background: var(--white); border-radius: 20px; padding: 7px 14px; font-size: 13px; font-weight: 500; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+.saved-pill:hover { border-color: var(--primary); color: var(--primary); }
+.saved-pill.active { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+.saved-count { background: var(--primary); color: white; border-radius: 10px; padding: 1px 7px; font-size: 11px; font-weight: 700; }
+
+/* CONTROLS */
+.controls { background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+.controls-inner { max-width: 1100px; margin: 0 auto; padding: 12px 24px; display: flex; flex-direction: column; gap: 10px; }
+.controls-row1 { display: flex; gap: 8px; align-items: center; }
+.city-select { appearance: none; -webkit-appearance: none; background: #f1f3f4 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 11px center; border: 1.5px solid transparent; color: var(--text); font-family: var(--font); font-size: 14px; font-weight: 500; padding: 9px 34px 9px 14px; border-radius: 24px; cursor: pointer; outline: none; transition: all 0.15s; min-width: 148px; }
+.city-select:hover { background-color: #e8eaed; }
+.search-wrap { flex: 1; position: relative; display: flex; align-items: center; }
+.search-icon { position: absolute; left: 14px; color: var(--text-muted); pointer-events: none; }
+.search-input { width: 100%; background: #f1f3f4; border: 1.5px solid transparent; color: var(--text); font-family: var(--font); font-size: 14px; padding: 9px 14px 9px 40px; border-radius: 24px; outline: none; transition: all 0.15s; }
+.search-input::placeholder { color: var(--text-dim); }
+.search-input:focus { background: var(--white); border-color: var(--primary); }
+.nearme-btn { background: #f1f3f4; border: 1.5px solid transparent; color: var(--text-muted); font-family: var(--font); font-size: 13px; font-weight: 500; padding: 9px 16px; border-radius: 24px; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 5px; white-space: nowrap; flex-shrink: 0; }
+.nearme-btn:hover { background: var(--primary-light); color: var(--primary); }
+.nearme-btn.active { background: var(--primary); color: white; }
+.nearme-btn.loading { opacity: 0.6; cursor: wait; }
+.controls-row2 { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.chip { background: #f1f3f4; border: 1.5px solid transparent; color: var(--text-muted); font-family: var(--font); font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 20px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.chip:hover { background: var(--primary-light); color: var(--primary); }
+.chip.active { background: var(--primary); color: white; }
+.size-divider { width: 1px; height: 20px; background: var(--border); margin: 0 2px; }
+
+/* MAP */
+.map-toggle-bar { max-width: 1100px; margin: 0 auto; padding: 14px 24px 0; display: flex; align-items: center; gap: 10px; }
+.map-toggle-btn { background: var(--white); border: 1.5px solid var(--border); color: var(--text-muted); font-family: var(--font); font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: 8px; cursor: pointer; transition: all 0.15s; }
+.map-toggle-btn:hover { border-color: var(--primary); color: var(--primary); }
+.map-toggle-btn.open { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+.map-panel { max-width: 1100px; margin: 12px auto 0; padding: 0 24px; display: none; }
+.map-panel.open { display: block; }
+.map-embed { width: 100%; height: 300px; border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow); }
+.map-embed iframe { width: 100%; height: 100%; border: none; }
+
+/* META */
+.results-meta { max-width: 1100px; margin: 0 auto; padding: 14px 24px 8px; color: var(--text-muted); font-size: 13px; }
+.results-meta strong { color: var(--primary-dark); font-weight: 600; }
+
+/* GRID */
+main { max-width: 1100px; margin: 0 auto; padding: 0 24px 60px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+
+/* CARD */
+.card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: box-shadow 0.2s, transform 0.2s; position: relative; }
+.card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+.card.saved { border-color: var(--primary); }
+
+/* Photo area */
+.card-photo { position: relative; height: 160px; overflow: hidden; }
+.card-photo-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s; }
+.card:hover .card-photo-img { transform: scale(1.03); }
+.photo-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 52px; }
+.pet-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.25); }
+.pet-bar-fill { height: 100%; background: var(--primary); }
+.photo-cat-badge { position: absolute; top: 10px; left: 10px; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 6px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.save-btn { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 50%; border: none; background: rgba(255,255,255,0.92); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: all 0.15s; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+.save-btn:hover { transform: scale(1.1); }
+.save-btn.saved-active { background: var(--primary); color: white; }
+
+/* Card body */
+.card-body { padding: 13px 14px 0; }
+.card-name { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 5px; line-height: 1.3; display: flex; align-items: center; flex-wrap: wrap; gap: 5px; }
+.card-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.55; }
+.card-footer { padding: 10px 14px 13px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); margin-top: 10px; gap: 8px; }
+.card-meta { display: flex; flex-direction: column; gap: 3px; }
+.card-location { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.card-pet-row { display: flex; align-items: center; gap: 5px; }
+.pet-dots { display: flex; gap: 3px; }
+.pet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); }
+.pet-dot.on { background: var(--primary); }
+.pet-size-label { font-size: 11px; color: var(--text-dim); }
+.card-tags { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
+.tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; background: #f1f3f4; color: var(--text-muted); }
+.distance-badge { font-size: 11px; font-weight: 600; color: var(--primary-dark); background: var(--primary-light); border-radius: 4px; padding: 2px 7px; }
+
+/* Category badge colors */
+.cat-restaurant { background: rgba(253,236,230,0.92); color: #c05a20; }
+.cat-cafe       { background: rgba(230,244,234,0.92); color: #2d6a4f; }
+.cat-bar        { background: rgba(237,232,250,0.92); color: #5a3fa0; }
+.cat-park       { background: rgba(230,244,230,0.92); color: #2d6b2d; }
+.cat-hotel      { background: rgba(230,240,255,0.92); color: #2050a0; }
+.cat-vet        { background: rgba(255,235,235,0.92); color: #b03030; }
+.cat-shop       { background: rgba(255,248,224,0.92); color: #7a5500; }
+
+/* Suggest */
+.suggest-strip { max-width: 1100px; margin: 0 auto; padding: 0 24px 48px; }
+.suggest-box { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; box-shadow: var(--shadow); }
+.suggest-box p { font-size: 14px; color: var(--text-muted); }
+.suggest-box strong { color: var(--text); font-weight: 600; }
+.suggest-btn { background: var(--primary); border: none; color: white; font-family: var(--font); font-size: 13px; font-weight: 600; padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: opacity 0.15s; white-space: nowrap; }
+.suggest-btn:hover { opacity: 0.88; }
+
+/* Empty */
+.empty { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.empty-icon { font-size: 40px; margin-bottom: 12px; }
+
+/* Banner */
+.saved-banner { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--primary); color: white; font-size: 13px; font-weight: 600; padding: 10px 22px; border-radius: 20px; transition: transform 0.3s; z-index: 999; white-space: nowrap; box-shadow: 0 4px 16px rgba(91,140,90,0.35); }
+.saved-banner.show { transform: translateX(-50%) translateY(0); }
+
+footer { border-top: 1px solid var(--border); padding: 20px 24px; text-align: center; color: var(--text-dim); font-size: 12px; background: var(--white); }
+
+@media (max-width: 640px) {
+  .hero { padding: 18px 16px; }
+  .controls-inner, .map-toggle-bar, .map-panel, .results-meta, main, .suggest-strip { padding-left: 16px; padding-right: 16px; }
+  .grid { grid-template-columns: 1fr; }
+  .nearme-btn .label { display: none; }
+}
 </style>
 </head>
 <body>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-inner">
-    <div class="logo-area">
-      <div class="logo">
-        <div class="logo-paw">🐾</div>
-        <div class="logo-text">Pet<span>Spots</span></div>
-      </div>
-      <div class="tagline">Pet-friendly places across Serbia — vetted, honest, local</div>
-    </div>
-    <div class="hero-right">
-      <div class="saved-pill" id="savedPill" onclick="toggleSavedFilter()">
-        ♡ Saved <span class="saved-count" id="savedCount">0</span>
+    <div class="logo">
+      <div class="logo-icon">🐾</div>
+      <div>
+        <div class="logo-name">Pet<span>Spots</span> Serbia</div>
+        <div class="tagline">Pet-friendly places — vetted, honest, local</div>
       </div>
     </div>
+    <div class="saved-pill" id="savedPill" onclick="toggleSavedFilter()">♡ Saved <span class="saved-count" id="savedCount">0</span></div>
   </div>
 </div>
 
-<!-- STICKY CONTROLS -->
 <div class="controls">
   <div class="controls-inner">
     <div class="controls-row1">
@@ -594,51 +172,44 @@
         <option value="Novi Sad">📍 Novi Sad</option>
         <option value="Niš">📍 Niš</option>
       </select>
-      <input class="search-input" type="text" id="searchInput" placeholder="Search by name, area, vibe…" oninput="render()">
+      <div class="search-wrap">
+        <span class="search-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="#aaa" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <input class="search-input" type="text" id="searchInput" placeholder="Search by name, area, vibe…" oninput="render()">
+      </div>
+      <button class="nearme-btn" id="nearmeBtn" onclick="toggleNearMe()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.4"/><circle cx="7" cy="7" r="2" fill="currentColor"/></svg>
+        <span class="label" id="nearmeBtnLabel">Near me</span>
+      </button>
     </div>
     <div class="controls-row2">
-      <button class="filter-btn active" onclick="setCategory('all', this)">All</button>
-      <button class="filter-btn" onclick="setCategory('restaurant', this)">🍽 Restaurant</button>
-      <button class="filter-btn" onclick="setCategory('cafe', this)">☕ Cafe</button>
-      <button class="filter-btn" onclick="setCategory('bar', this)">🍷 Bar</button>
-      <button class="filter-btn" onclick="setCategory('park', this)">🌿 Park</button>
-      <button class="filter-btn" onclick="setCategory('hotel', this)">🏨 Hotel</button>
-      <button class="filter-btn" onclick="setCategory('vet', this)">💉 Vet</button>
-      <button class="filter-btn" onclick="setCategory('shop', this)">🛍 Shop</button>
-      <div class="size-filters">
-        <button class="size-btn" onclick="toggleSize('small', this)" title="Small dogs ok">🐩 Small</button>
-        <button class="size-btn" onclick="toggleSize('large', this)" title="Large dogs ok">🐕 Large</button>
-      </div>
+      <button class="chip active" onclick="setCategory('all',this)">All</button>
+      <button class="chip" onclick="setCategory('restaurant',this)">🍽 Restaurant</button>
+      <button class="chip" onclick="setCategory('cafe',this)">☕ Cafe</button>
+      <button class="chip" onclick="setCategory('bar',this)">🍷 Bar</button>
+      <button class="chip" onclick="setCategory('park',this)">🌿 Park</button>
+      <button class="chip" onclick="setCategory('hotel',this)">🏨 Hotel</button>
+      <button class="chip" onclick="setCategory('vet',this)">💉 Vet</button>
+      <button class="chip" onclick="setCategory('shop',this)">🛍 Shop</button>
+      <div class="size-divider"></div>
+      <button class="chip" onclick="toggleSize('small',this)">🐩 Small dog</button>
+      <button class="chip" onclick="toggleSize('large',this)">🐕 Large dog</button>
     </div>
   </div>
 </div>
 
-<!-- MAP TOGGLE -->
 <div class="map-toggle-bar">
-  <button class="map-toggle-btn" id="mapToggleBtn" onclick="toggleMap()">
-    <span>🗺</span> <span id="mapBtnLabel">Show map</span>
-  </button>
-  <span style="font-size:12px; color:var(--text-dim);">Belgrade city map</span>
+  <button class="map-toggle-btn" id="mapToggleBtn" onclick="toggleMap()">🗺 <span id="mapBtnLabel">Show map</span></button>
+  <span style="font-size:12px;color:var(--text-dim)">Serbia city map</span>
 </div>
-
 <div class="map-panel" id="mapPanel">
   <div class="map-embed">
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d91288.79987699498!2d20.370561!3d44.804760!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475a7aa3d7b53fbd%3A0x1db8645cf2177ee4!2sBelgrade!5e0!3m2!1sen!2srs!4v1700000000000"
-      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d91288.79987699498!2d20.370561!3d44.804760!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475a7aa3d7b53fbd%3A0x1db8645cf2177ee4!2sBelgrade!5e0!3m2!1sen!2srs!4v1700000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
 </div>
 
-<!-- RESULTS META -->
 <div class="results-meta" id="resultsMeta"></div>
+<main><div class="grid" id="grid"></div></main>
 
-<!-- GRID -->
-<main>
-  <div class="grid" id="grid"></div>
-</main>
-
-<!-- SUGGEST -->
 <div class="suggest-strip">
   <div class="suggest-box">
     <p><strong>Know a pet-friendly spot we're missing?</strong><br>Help other pet owners discover great places across Serbia.</p>
@@ -646,338 +217,125 @@
   </div>
 </div>
 
-<footer>
-  PetSpots Serbia — free, independent, no sponsored listings. 🐾
-</footer>
-
+<footer>PetSpots Serbia — free, independent, no sponsored listings 🐾</footer>
 <div class="saved-banner" id="savedBanner"></div>
 
 <script>
+const PHOTOS = {
+  restaurant: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=70',
+  cafe:       'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&q=70',
+  bar:        'https://images.unsplash.com/photo-1555658636-6e4a36218be7?w=600&q=70',
+  park:       'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=70',
+  hotel:      'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=70',
+  vet:        'https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=600&q=70',
+  shop:       'https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?w=600&q=70',
+};
+const BG = { restaurant:'#fde8d8',cafe:'#d8f0e4',bar:'#ede8f8',park:'#d8f0d8',hotel:'#d8e8f8',vet:'#f8d8d8',shop:'#f8f0d0' };
+const CAT_LABELS = { restaurant:'Restaurant',cafe:'Cafe',bar:'Bar / Kafana',park:'Park',hotel:'Hotel',vet:'Vet',shop:'Pet Shop' };
+
 const PLACES = [
-  /* ── BEOGRAD ── */
-  {
-    id: 1,
-    name: "Kafana ?",
-    city: "Beograd",
-    category: "bar",
-    area: "Skadarlija",
-    desc: "Hidden courtyard kafana with a dog water bowl at every table. Large terrace, staff will bring your dog a treat unprompted.",
-    tags: ["outdoor terrace", "off-leash area"],
-    petLevel: 5,
-    petSizes: ["small", "large"]
-  },
-  {
-    id: 2,
-    name: "Restoran Šaran",
-    city: "Beograd",
-    category: "restaurant",
-    area: "Zemun",
-    desc: "Floating Danube restaurant since 1968. The whole terrace is dog-friendly — owners eat here weekly with their dogs.",
-    tags: ["outdoor terrace", "by the water"],
-    petLevel: 4,
-    petSizes: ["small", "large"]
-  },
-  {
-    id: 3,
-    name: "Kafeterija Krug",
-    city: "Beograd",
-    category: "cafe",
-    area: "Dorćol",
-    desc: "Tiny courtyard cafe that keeps a box of dog biscuits at the counter. Dogs sleep under the tables while owners work.",
-    tags: ["dog treats", "courtyard"],
-    petLevel: 5,
-    petSizes: ["small", "large"]
-  },
-  {
-    id: 4,
-    name: "Topčider Park",
-    city: "Beograd",
-    category: "park",
-    area: "Topčider",
-    desc: "Large off-leash zone, water fountains for dogs, and a dedicated dog run. The most dog-friendly park in the city.",
-    tags: ["off-leash area", "water station", "dog run"],
-    petLevel: 5,
-    petSizes: ["small", "large"]
-  },
-  {
-    id: 5,
-    name: "Pets & Friends Beograd",
-    city: "Beograd",
-    category: "shop",
-    area: "Novi Beograd",
-    desc: "Pets welcome inside to browse. Grooming station on-site. Staff will help you find the right food for your breed.",
-    tags: ["grooming", "pets inside"],
-    petLevel: 5,
-    petSizes: ["small", "large"]
-  },
-  {
-    id: 6,
-    name: "Hotel Zira",
-    city: "Beograd",
-    category: "hotel",
-    area: "Stari Grad",
-    desc: "One of the few city-centre hotels that accepts large dogs (up to 25kg). Dog bed and food bowl provided. Small fee applies.",
-    tags: ["large dogs ok", "dog bed provided"],
-    petLevel: 4,
-    petSizes: ["small", "large"]
-  },
-  {
-    id: 7,
-    name: "Dvorište Cafe",
-    city: "Beograd",
-    category: "cafe",
-    area: "Palilula",
-    desc: "Hidden courtyard cafe. Small dogs can sit on owner's lap at tables, larger ones are welcome on the terrace. Water always available.",
-    tags: ["courtyard", "water station"],
-    petLevel: 4,
-    petSizes: ["small", "large"]
-  },
-  {
-    id: 8,
-    name: "VetClinic Dorćol",
-    city: "Beograd",
-    category: "vet",
-    area: "Dorćol",
-    desc: "English-speaking vets, open Saturdays. Calm waiting room with separate dog and cat areas. No appointment needed for emergencies.",
-    tags: ["english-speaking", "open Saturday"],
-    petLevel: 5,
-    petSizes: ["small", "large"]
-  },
-  /* ── NOVI SAD ── */
-  {
-    id: 9,
-    name: "Štrand Beach",
-    city: "Novi Sad",
-    category: "park",
-    area: "Strand",
-    desc: "The Danube beach has a dedicated dog section. Off-leash, fenced, with a water entry point. Busy on weekends but worth it.",
-    tags: ["off-leash area", "swimming", "fenced"],
-    petLevel: 5,
-    petSizes: ["small", "large"]
-  },
-  {
-    id: 10,
-    name: "Kafić Lipa",
-    city: "Novi Sad",
-    category: "cafe",
-    area: "Centar",
-    desc: "The owner has two golden retrievers who sleep behind the counter. All dogs welcome, huge terrace, excellent coffee.",
-    tags: ["outdoor terrace", "dog treats"],
-    petLevel: 5,
-    petSizes: ["small", "large"]
-  },
-  {
-    id: 11,
-    name: "Restoran Fontana",
-    city: "Novi Sad",
-    category: "restaurant",
-    area: "Petrovaradin",
-    desc: "Garden restaurant next to the fortress. Dogs welcome on the garden terrace — they even have a 'dog menu' of plain meat.",
-    tags: ["garden terrace", "dog menu"],
-    petLevel: 5,
-    petSizes: ["small", "large"]
-  },
-  {
-    id: 12,
-    name: "Pet Centar Novi Sad",
-    city: "Novi Sad",
-    category: "shop",
-    area: "Liman",
-    desc: "Large pet store where you bring your dog to shop. Vet consultation available on Tuesdays and Thursdays.",
-    tags: ["vet on site", "pets inside"],
-    petLevel: 4,
-    petSizes: ["small", "large"]
-  },
-  /* ── NIŠ ── */
-  {
-    id: 13,
-    name: "Nišava Promenade",
-    city: "Niš",
-    category: "park",
-    area: "Centar",
-    desc: "The riverside walk is completely dog-friendly. Off-leash stretches in the morning hours, cafes along the route allow dogs on terrace.",
-    tags: ["riverside", "off-leash mornings"],
-    petLevel: 4,
-    petSizes: ["small", "large"]
-  },
-  {
-    id: 14,
-    name: "Kafana Galija",
-    city: "Niš",
-    category: "bar",
-    area: "Centar",
-    desc: "Old-school kafana with a large outdoor area. Regulars bring their dogs, staff knows most of them by name.",
-    tags: ["outdoor seating", "local favourite"],
-    petLevel: 4,
-    petSizes: ["small", "large"]
-  },
-  {
-    id: 15,
-    name: "Caffe Botanica",
-    city: "Niš",
-    category: "cafe",
-    area: "Medijana",
-    desc: "Garden cafe surrounded by plants. Small dogs can sit at tables, larger ones welcome outside. Cat cafe vibes but for dogs.",
-    tags: ["garden", "relaxed vibe"],
-    petLevel: 3,
-    petSizes: ["small"]
-  }
+  {id:1,  name:"Kafana ?",          city:"Beograd",  category:"bar",        area:"Skadarlija",  desc:"Hidden courtyard kafana with a dog water bowl at every table. Staff will bring your dog a treat unprompted.",       tags:["outdoor terrace","off-leash area"],    petLevel:5, petSizes:["small","large"], lat:44.8177, lng:20.4634},
+  {id:2,  name:"Restoran Šaran",    city:"Beograd",  category:"restaurant", area:"Zemun",       desc:"Floating Danube restaurant since 1968. The whole terrace is dog-friendly — owners eat here weekly with their dogs.", tags:["outdoor terrace","by the water"],      petLevel:4, petSizes:["small","large"], lat:44.8453, lng:20.4123},
+  {id:3,  name:"Kafeterija Krug",   city:"Beograd",  category:"cafe",       area:"Dorćol",      desc:"Tiny courtyard cafe with a box of dog biscuits at the counter. Dogs sleep under the tables while owners work.",     tags:["dog treats","courtyard"],              petLevel:5, petSizes:["small","large"], lat:44.8202, lng:20.4602},
+  {id:4,  name:"Topčider Park",     city:"Beograd",  category:"park",       area:"Topčider",    desc:"Large off-leash zone, water fountains for dogs, and a dedicated dog run. Most dog-friendly park in the city.",      tags:["off-leash area","dog run"],            petLevel:5, petSizes:["small","large"], lat:44.7812, lng:20.4612},
+  {id:5,  name:"Pets & Friends",    city:"Beograd",  category:"shop",       area:"Novi Beograd",desc:"Pets welcome inside to browse. Grooming station on-site. Staff help you find the right food for your breed.",        tags:["grooming","pets inside"],              petLevel:5, petSizes:["small","large"], lat:44.8065, lng:20.4190},
+  {id:6,  name:"Hotel Zira",        city:"Beograd",  category:"hotel",      area:"Stari Grad",  desc:"One of the few city-centre hotels accepting large dogs up to 25kg. Dog bed and food bowl provided on request.",     tags:["large dogs ok","dog bed"],             petLevel:4, petSizes:["small","large"], lat:44.8125, lng:20.4612},
+  {id:7,  name:"Dvorište Cafe",     city:"Beograd",  category:"cafe",       area:"Palilula",    desc:"Hidden courtyard cafe. Small dogs at tables, larger ones on the terrace. Fresh water always available.",            tags:["courtyard","water station"],           petLevel:4, petSizes:["small","large"], lat:44.8219, lng:20.4802},
+  {id:8,  name:"VetClinic Dorćol",  city:"Beograd",  category:"vet",        area:"Dorćol",      desc:"English-speaking vets, open Saturdays. Separate dog and cat waiting areas. No appointment for emergencies.",       tags:["english-speaking","open Saturday"],   petLevel:5, petSizes:["small","large"], lat:44.8198, lng:20.4580},
+  {id:9,  name:"Štrand Beach",      city:"Novi Sad", category:"park",       area:"Strand",      desc:"Dedicated dog section at the Danube beach. Off-leash, fenced, with a water entry point. Busy on weekends.",        tags:["off-leash area","swimming","fenced"], petLevel:5, petSizes:["small","large"], lat:45.2671, lng:19.8335},
+  {id:10, name:"Kafić Lipa",        city:"Novi Sad", category:"cafe",       area:"Centar",      desc:"The owner has two golden retrievers behind the counter. All dogs welcome, huge terrace, excellent coffee.",         tags:["outdoor terrace","dog treats"],        petLevel:5, petSizes:["small","large"], lat:45.2551, lng:19.8451},
+  {id:11, name:"Restoran Fontana",  city:"Novi Sad", category:"restaurant", area:"Petrovaradin",desc:"Garden restaurant by the fortress. Dogs welcome on the terrace — they even have a dog menu of plain meat.",         tags:["garden terrace","dog menu"],          petLevel:5, petSizes:["small","large"], lat:45.2481, lng:19.8672},
+  {id:12, name:"Pet Centar NS",     city:"Novi Sad", category:"shop",       area:"Liman",       desc:"Large pet store where you bring your dog shopping. Vet consultation available Tuesdays and Thursdays.",             tags:["vet on site","pets inside"],           petLevel:4, petSizes:["small","large"], lat:45.2438, lng:19.8362},
+  {id:13, name:"Nišava Promenade",  city:"Niš",      category:"park",       area:"Centar",      desc:"Riverside walk, fully dog-friendly. Off-leash stretches in the morning, cafes along the route allow dogs on terrace.", tags:["riverside","off-leash mornings"],   petLevel:4, petSizes:["small","large"], lat:43.3209, lng:21.8954},
+  {id:14, name:"Kafana Galija",     city:"Niš",      category:"bar",        area:"Centar",      desc:"Old-school kafana with a large outdoor area. Regulars bring their dogs, staff knows most of them by name.",         tags:["outdoor seating","local fave"],       petLevel:4, petSizes:["small","large"], lat:43.3189, lng:21.8980},
+  {id:15, name:"Caffe Botanica",    city:"Niš",      category:"cafe",       area:"Medijana",    desc:"Garden cafe surrounded by plants. Small dogs at tables, larger ones outside. Very relaxed, low-key vibe.",          tags:["garden","relaxed vibe"],              petLevel:3, petSizes:["small"],          lat:43.3241, lng:21.9102}
 ];
 
-const CAT_LABELS = {
-  restaurant: 'Restaurant',
-  cafe: 'Cafe',
-  bar: 'Bar / Kafana',
-  park: 'Park',
-  hotel: 'Hotel',
-  vet: 'Vet',
-  shop: 'Pet Shop',
-  beach: 'Beach'
-};
+let activeCategory='all', activeSizes=new Set(), showSavedOnly=false;
+let userLat=null, userLng=null, nearMeActive=false;
+let saved=new Set();
+try { const s=localStorage.getItem('ps3'); if(s) saved=new Set(JSON.parse(s)); } catch(e){}
+function persist(){ try{localStorage.setItem('ps3',JSON.stringify([...saved]));}catch(e){} }
 
-let activeCategory = 'all';
-let activeSizes = new Set();
-let showSavedOnly = false;
-let saved = new Set();
+function distKm(a,b,c,d){ const R=6371,x=(c-a)*Math.PI/180,y=(d-b)*Math.PI/180; const q=Math.sin(x/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(y/2)**2; return R*2*Math.atan2(Math.sqrt(q),Math.sqrt(1-q)); }
+function fmtD(k){ return k<1?Math.round(k*1000)+' m':k.toFixed(1)+' km'; }
 
-try {
-  const s = localStorage.getItem('ps_saved');
-  if (s) saved = new Set(JSON.parse(s));
-} catch(e) {}
-
-function saveToStorage() {
-  try { localStorage.setItem('ps_saved', JSON.stringify([...saved])); } catch(e){}
+function toggleNearMe(){
+  const btn=document.getElementById('nearmeBtn'), lbl=document.getElementById('nearmeBtnLabel');
+  if(nearMeActive){ nearMeActive=false; userLat=null; userLng=null; btn.classList.remove('active'); lbl.textContent='Near me'; render(); return; }
+  if(!navigator.geolocation){ showBanner('GPS not supported'); return; }
+  btn.classList.add('loading'); lbl.textContent='Locating…';
+  navigator.geolocation.getCurrentPosition(pos=>{
+    userLat=pos.coords.latitude; userLng=pos.coords.longitude; nearMeActive=true;
+    btn.classList.remove('loading'); btn.classList.add('active'); lbl.textContent='Near me';
+    document.getElementById('citySelect').value='all';
+    render(); showBanner('Sorted by distance 📍');
+  }, err=>{ btn.classList.remove('loading'); lbl.textContent='Near me'; showBanner(err.code===1?'Location denied':'Could not locate'); },{timeout:8000});
 }
 
-function toggleSave(id, btn, cardEl, e) {
-  e.stopPropagation();
-  if (saved.has(id)) {
-    saved.delete(id);
-    btn.textContent = '♡';
-    btn.classList.remove('saved-active');
-    cardEl.classList.remove('saved');
-  } else {
-    saved.add(id);
-    btn.textContent = '♥';
-    btn.classList.add('saved-active');
-    cardEl.classList.add('saved');
-    showBanner('Saved! ♥');
-  }
-  saveToStorage();
-  updateSavedPill();
-  if (showSavedOnly) render();
+function toggleSave(id,e){ e.stopPropagation();
+  const card=document.getElementById('c'+id), btn=card.querySelector('.save-btn');
+  if(saved.has(id)){ saved.delete(id); btn.textContent='♡'; btn.classList.remove('saved-active'); card.classList.remove('saved'); }
+  else { saved.add(id); btn.textContent='♥'; btn.classList.add('saved-active'); card.classList.add('saved'); showBanner('Saved ♥'); }
+  persist(); updatePill(); if(showSavedOnly) render();
 }
 
-function updateSavedPill() {
-  document.getElementById('savedCount').textContent = saved.size;
-  document.getElementById('savedPill').classList.toggle('active', showSavedOnly);
-}
+function updatePill(){ document.getElementById('savedCount').textContent=saved.size; document.getElementById('savedPill').classList.toggle('active',showSavedOnly); }
+function toggleSavedFilter(){ showSavedOnly=!showSavedOnly; updatePill(); render(); }
+function setCategory(cat,btn){ activeCategory=cat; btn.closest('.controls-row2').querySelectorAll('.chip').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); render(); }
+function toggleSize(s,btn){ activeSizes.has(s)?activeSizes.delete(s):activeSizes.add(s); btn.classList.toggle('active'); render(); }
+function toggleMap(){ const p=document.getElementById('mapPanel'),b=document.getElementById('mapToggleBtn'),l=document.getElementById('mapBtnLabel'); const o=p.classList.toggle('open'); b.classList.toggle('open',o); l.textContent=o?'Hide map':'Show map'; }
+function showBanner(msg){ const b=document.getElementById('savedBanner'); b.textContent=msg; b.classList.add('show'); setTimeout(()=>b.classList.remove('show'),1800); }
+function dots(n){ return Array.from({length:5},(_,i)=>`<div class="pet-dot${i<n?' on':''}"></div>`).join(''); }
 
-function toggleSavedFilter() {
-  showSavedOnly = !showSavedOnly;
-  updateSavedPill();
-  render();
-}
-
-function setCategory(cat, btn) {
-  activeCategory = cat;
-  btn.closest('.controls-row2').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  render();
-}
-
-function toggleSize(size, btn) {
-  if (activeSizes.has(size)) {
-    activeSizes.delete(size);
-    btn.classList.remove('active');
-  } else {
-    activeSizes.add(size);
-    btn.classList.add('active');
-  }
-  render();
-}
-
-function toggleMap() {
-  const panel = document.getElementById('mapPanel');
-  const btn = document.getElementById('mapToggleBtn');
-  const label = document.getElementById('mapBtnLabel');
-  const open = panel.classList.toggle('open');
-  btn.classList.toggle('open', open);
-  label.textContent = open ? 'Hide map' : 'Show map';
-}
-
-function showBanner(msg) {
-  const b = document.getElementById('savedBanner');
-  b.textContent = msg;
-  b.classList.add('show');
-  setTimeout(() => b.classList.remove('show'), 1800);
-}
-
-function petDots(level) {
-  return Array.from({length: 5}, (_, i) =>
-    `<div class="pet-star ${i < level ? 'on' : ''}"></div>`
-  ).join('');
-}
-
-function render() {
-  const city = document.getElementById('citySelect').value;
-  const q = document.getElementById('searchInput').value.toLowerCase();
-
-  let results = PLACES.filter(p => {
-    if (showSavedOnly && !saved.has(p.id)) return false;
-    if (city !== 'all' && p.city !== city) return false;
-    if (activeCategory !== 'all' && p.category !== activeCategory) return false;
-    if (activeSizes.size > 0 && ![...activeSizes].every(s => p.petSizes.includes(s))) return false;
-    if (q && !p.name.toLowerCase().includes(q) &&
-           !p.area.toLowerCase().includes(q) &&
-           !p.city.toLowerCase().includes(q) &&
-           !p.desc.toLowerCase().includes(q) &&
-           !p.tags.some(t => t.toLowerCase().includes(q))) return false;
+function render(){
+  const city=document.getElementById('citySelect').value;
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  let res=PLACES.filter(p=>{
+    if(showSavedOnly&&!saved.has(p.id)) return false;
+    if(city!=='all'&&p.city!==city) return false;
+    if(activeCategory!=='all'&&p.category!==activeCategory) return false;
+    if(activeSizes.size>0&&![...activeSizes].every(s=>p.petSizes.includes(s))) return false;
+    if(q&&![p.name,p.area,p.city,p.desc,...p.tags].some(v=>v.toLowerCase().includes(q))) return false;
     return true;
   });
+  if(nearMeActive&&userLat!==null) res=res.map(p=>({...p,d:distKm(userLat,userLng,p.lat,p.lng)})).sort((a,b)=>a.d-b.d);
 
-  const meta = document.getElementById('resultsMeta');
-  const cityLabel = city === 'all' ? 'all cities' : city;
-  meta.innerHTML = `<span>Showing <strong>${results.length}</strong> pet-friendly place${results.length !== 1 ? 's' : ''} in ${cityLabel}</span>`;
+  const cityLabel=nearMeActive?'your location':city==='all'?'all cities':city;
+  document.getElementById('resultsMeta').innerHTML=`Showing <strong>${res.length}</strong> pet-friendly place${res.length!==1?'s':''} ${nearMeActive?'near':'in'} ${cityLabel}`;
 
-  const grid = document.getElementById('grid');
-  if (results.length === 0) {
-    grid.innerHTML = `<div class="empty"><div class="empty-icon">🐾</div><div style="font-size:18px; font-weight:700; color:var(--text)">No places found</div><p>Try a different city, category, or remove a filter.</p></div>`;
-    return;
-  }
+  const grid=document.getElementById('grid');
+  if(!res.length){ grid.innerHTML=`<div class="empty"><div class="empty-icon">🐾</div><p style="font-size:15px;font-weight:500;color:var(--text)">No places found</p><p style="margin-top:6px">Try a different city or remove a filter.</p></div>`; return; }
 
-  grid.innerHTML = results.map(p => {
-    const isSaved = saved.has(p.id);
-    const catClass = `cat-${p.category}`;
-    const pct = (p.petLevel / 5) * 100;
-    const sizeLabel = p.petSizes.includes('large') ? 'All sizes welcome' : 'Small pets only';
-    return `
-    <div class="card ${isSaved ? 'saved' : ''}" id="card-${p.id}">
-      <div class="pet-bar"><div class="pet-bar-fill" style="width:${pct}%"></div></div>
-      <button class="save-btn ${isSaved ? 'saved-active' : ''}" onclick="toggleSave(${p.id}, this, document.getElementById('card-${p.id}'), event)">${isSaved ? '♥' : '♡'}</button>
-      <div class="card-body">
-        <div class="card-header">
-          <span class="card-cat ${catClass}">${CAT_LABELS[p.category] || p.category}</span>
-        </div>
-        <div class="card-name">${p.name}</div>
-        <div class="card-desc">${p.desc}</div>
-      </div>
-      <div class="card-footer">
-        <div class="card-meta">
-          <div class="card-area">${p.city} · ${p.area}</div>
-          <div style="display:flex;align-items:center;gap:6px;margin-top:2px;">
-            <div class="pet-stars">${petDots(p.petLevel)}</div>
-            <span class="card-pets">${sizeLabel}</span>
-          </div>
-        </div>
-        <div class="card-tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-      </div>
-    </div>`;
+  grid.innerHTML=res.map(p=>{
+    const sv=saved.has(p.id);
+    const imgSrc=PHOTOS[p.category]||PHOTOS.cafe;
+    const bg=BG[p.category]||'#eee';
+    const dist=nearMeActive&&p.d!==undefined?`<span class="distance-badge">📍 ${fmtD(p.d)}</span>`:'';
+    const sizes=p.petSizes.includes('large')?'All sizes':'Small only';
+    return `<div class="card${sv?' saved':''}" id="c${p.id}">
+  <div class="card-photo" style="background:${bg}">
+    <img class="card-photo-img" src="${imgSrc}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'">
+    <div class="pet-bar"><div class="pet-bar-fill" style="width:${p.petLevel*20}%"></div></div>
+    <span class="photo-cat-badge cat-${p.category}">${CAT_LABELS[p.category]||p.category}</span>
+    <button class="save-btn${sv?' saved-active':''}" onclick="toggleSave(${p.id},event)">${sv?'♥':'♡'}</button>
+  </div>
+  <div class="card-body">
+    <div class="card-name">${p.name}${dist}</div>
+    <div class="card-desc">${p.desc}</div>
+  </div>
+  <div class="card-footer">
+    <div class="card-meta">
+      <div class="card-location">📍 ${p.city} · ${p.area}</div>
+      <div class="card-pet-row"><div class="pet-dots">${dots(p.petLevel)}</div><span class="pet-size-label">${sizes}</span></div>
+    </div>
+    <div class="card-tags">${p.tags.slice(0,2).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+  </div>
+</div>`;
   }).join('');
 }
 
-updateSavedPill();
-render();
+updatePill(); render();
 </script>
 </body>
 </html>
